@@ -2,30 +2,39 @@
 //  ViewController.swift
 //  Project4
 //
-//  Created by Ning, Xinran on 23/5/23.
+//  Created by Ning, Xinran on 22/5/23.
 //
 
 import UIKit
+import WebKit
 
-class TableViewController: UITableViewController {
-    // Our websites
-    var websites = ["hackingwithswift.com", "youtube.com", "viki.com"]
+class ViewController: UITableViewController {  // Parent class first, then protocols
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+  // Our websites
+  var websites = ["hackingwithswift.com", "youtube.com", "viki.com"]
 
-        
-    }
-    
 
-    /*
-    // MARK: - Navigation
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    title = "Mini Browser"
+    navigationController?.navigationBar.prefersLargeTitles = true
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+  }
 
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return websites.count
+  }
+
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "Website", for: indexPath)
+    cell.textLabel?.text = websites[indexPath.row]
+    return cell
+  }
+
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let wv = WebViewController()
+    wv.website = websites[indexPath.row]
+    navigationController?.pushViewController(wv, animated: true)
+  }
 }
+
